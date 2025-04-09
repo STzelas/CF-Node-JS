@@ -45,12 +45,20 @@ app.post("/userForm", (request, response) => {
 
 app.use('/user1', (request,response) => {
   console.log("User 1")
-  response.send("User 1 Page")
+  response.send("User 1 Page, Hello")
 })
 
 app.use('/user2', (request,response) => {
   console.log("User 2")
   response.send("User 2 Page")
+})
+
+// Δεν θα μπει εδω μέσα, θα μας στείλει 
+// πάλι στο /user2 επειδή είναι πιο πάνω στον κώδικα
+// Δεν μπαίνει if
+app.use('/user2/hello', (request,response) => {  
+  console.log("User 2 Hello")
+  response.send("User 2 Page, Hello")
 })
 
 
