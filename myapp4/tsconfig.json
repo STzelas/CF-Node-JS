@@ -1,0 +1,12 @@
+{                               // Κάποια πράγματα που πρέπει να υπάρχουν για την typescript (είναι standart)
+  "compilerOptions": {
+    "module": "CommonJS",       // aplo js
+    "esModuleInterop": true,    // μεταξύ TypeScript και CommonJS υπάρχει αλληλεπίδραση
+    "target": "ES6",            // αποτέλεσμα εφαρμογή θα είναι ecmascript 6
+    "moduleResolution": "node", // Η εφαρμογή είναι node εφαρμογή
+    "sourceMap": true,          // Δημιουργεί κάποια map files που χρησιμοποιούνται όταν μετατρέπεται η TS σ JS
+    "outDir": "dist",           // Που θα βάλει τα αρχεία js όταν τα μετατρέψει απο ts
+    "sourceRoot": "src"         // Που βρίσκονται τα αρχεία ts που θα δημιουργήσουμε
+  },
+  "lib": ["ES2024"]             // Lib που δηλώνουμε την έκδοση ecmascript που χρησιμοποιούμε
+}
