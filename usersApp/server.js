@@ -9,11 +9,13 @@ mongoose.connect(process.env.MONGODB_URI)
         .then(                  // thenables  / promise
           () => {
             console.log("Connection to mongoDB established")
+
+            app.listen(port, () => {
+              console.log(`Server on port ${port} is up and running...`)
+            })
+            
           },
           err => { console.log('Failed to connect to mongoDB',err)}
         )
 
 
-app.listen(port, () => {
-  console.log(`Server on port ${port} is up and running...`)
-})
