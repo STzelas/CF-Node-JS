@@ -23,11 +23,27 @@ app.use(express.urlencoded({extended: true}))
 // που βρίσκονται μέσα στον φάκελο files -express.static('files')-
 app.use('/', express.static('files'))
 
+// Ενδιάμεση συνάρτηση, Παίρνει ένα request δίνει ενα response και το βασικό είναι το next
+const logger = (request, response, next) => {
+  let url = request.url // Το παίρνουμε απο το request, Βρίσκεται στους headers
+  console.log("Logger", request.body)
+  let time = new Date()
+  console.log("Received requests for " + url + " at " + time)
+
+  // Η next() Επαναφέρει τον έλεγχο σε αυτόν που την κάλεσε. (βλ. app.post)
+  next()
+}
+
+
 app.get("/", (request, response) => {
   response.send("This is the home page")
 })
 
-app.post('/user', (request, response) => {
+// Έχω post κλήση στον /user, θα περάσει 
+// τον έλεγχο στην ενδιάμεση κληση που είναι το logger
+// Θα κάνει ότι είναι να κάνει και επειδή λέει next()
+// θα περάσει στον υπόλοιπο κώδικα του callback
+app.post('/user', logger, (request, response) => {
   let data = request.body   // request = Αυτό που παίρνω απο το postman
   let username = request.body.username
   let email = request.body.email
