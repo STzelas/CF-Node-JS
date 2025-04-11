@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended: true}))
 // που βρίσκονται μέσα στον φάκελο files -express.static('files')-
 app.use('/', express.static('files'))
 
-// Ενδιάμεση συνάρτηση, Παίρνει ένα request δίνει ενα response και το βασικό είναι το next
+// Ενδιάμεση συνάρτηση, middleware, Παίρνει ένα request δίνει ενα response και το βασικό είναι το next
 const logger = (request, response, next) => {
   let url = request.url // Το παίρνουμε απο το request, Βρίσκεται στους headers
   console.log("Logger", request.body)
