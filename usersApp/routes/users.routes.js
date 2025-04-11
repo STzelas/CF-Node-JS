@@ -7,4 +7,8 @@ const userController = require('../controllers/user.controller')
 router.get('/', userController.findAll)
 router.get('/:username', userController.findOne)
 router.post('/', userController.create)
+router.patch('/:username', userController.update)
+router.delete('/:username', userController.deleteByUsername)
+router.delete('/:username/email/:email', userController.deleteByEmail)
+router.delete('/', userController.deleteAll)
 module.exports = router
