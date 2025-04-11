@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
 const userService = require("../services/user.services")
+const bcrypt = require('bcrypt')
 
 exports.findAll = async(request, response) => {
   console.log("Find All users from collection users")
@@ -57,10 +58,12 @@ exports.create = async(request, response) => {
   console.log("Create user")
   
   let data = request.body
+  const SaltOrRounds = 10
+  const hashedPassword = await bcrypt.hash(data.password, SaltOrRounds)
 
   const newUser = new User({
     username: data.username,
-    password: data.password,
+    password: hashedPassword,
     name: data.name,
     surname: data.surname,
     email: data.email,
@@ -115,23 +118,6 @@ exports.update = async(request,response) => {
   }
 }
 
-exports.deleteAll = async (request, response) => {
-  console.log("Deleting all emails...")
-
-  try {
-    const result = await User.deleteMany({})
-    response.status(200).json({
-      status:true,
-      data: result
-    })
-  } catch(err) {
-    console.log("Error deleting all documents", err)
-    response.status(400).json({
-      status:false,
-      data: err
-    })
-  }
-}
 
 exports.deleteByUsername = async(request, response) => {
   const username = request.params.username
