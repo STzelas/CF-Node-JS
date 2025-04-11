@@ -1,4 +1,3 @@
-
 const User = require('../models/user.model')
 
 exports.findAll = async(request, response) => {
@@ -6,14 +5,14 @@ exports.findAll = async(request, response) => {
 
   try{
     const result = await User.find()
-
-    response.json({
+    
+    response.status(200).json({
       status: true,
       data: result
     })
   } catch(err) {
     console.log("Problem in reading users", err)
-    response.json({
+    response.status(400).json({
       status: false,
       data: err
     })
@@ -28,14 +27,22 @@ exports.findOne = async(request, response) => {
     const result = await User.findOne({
       username: username
     })
+    if (result) {
+      response.status(200).json({
+        status: true,
+        data: result
+      })
+    } else {
+      response.status(404).json({
+        status: false,
+        data: "User not exists"
+      })
+    }
 
-    response.json({
-      status: true,
-      data: result
-    })
+    
   } catch(err) {
     console.log("Problem in finding user", err)
-    response.json({
+    response.status(400).json({
       status: false,
       data: err
     })
@@ -61,16 +68,15 @@ exports.create = async(request, response) => {
 
   try{
     const result = await newUser.save();
-    response.json({
+    response.status(200).json({
       status: true,
       data: result
     })
   } catch(err) {
     console.log("Problem in creating user", err)
-    response.json({
+    response.status(400).json({
       status: false,
       data: err
     })
   }
 }
-
