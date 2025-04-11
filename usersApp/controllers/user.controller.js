@@ -1,11 +1,13 @@
 const User = require('../models/user.model')
+const userService = require("../services/user.services")
 
 exports.findAll = async(request, response) => {
   console.log("Find All users from collection users")
 
   try{
-    const result = await User.find()
-    
+    // const result = await User.find()
+    const result = await userService.findAll()
+
     response.status(200).json({
       status: true,
       data: result
@@ -24,9 +26,11 @@ exports.findOne = async(request, response) => {
   let username = request.params.username
 
   try {
-    const result = await User.findOne({
-      username: username
-    })
+    // const result = await User.findOne({
+    //   username: username
+    // })
+
+    const result = await User.userService.findOne(username)
     if (result) {
       response.status(200).json({
         status: true,
@@ -75,6 +79,94 @@ exports.create = async(request, response) => {
   } catch(err) {
     console.log("Problem in creating user", err)
     response.status(400).json({
+      status: false,
+      data: err
+    })
+  }
+}
+
+exports.update = async(request,response) => {
+  const username = request.body.username
+  console.log("Update user with username", username)
+  const data = request.body
+
+  const updateUser = {
+    name: data.name,
+    surname: data.surname,
+    email: data.email,
+    address: {
+      area: data.address.area,
+      road: data.address.road
+    }
+  }
+
+  try {
+    const result = await User.findOneAndUpdate({username: username}, updateUser, {new: true})
+    response.status(200).json({
+      status: true,
+      data: result
+    })
+  } catch(err) {
+    console.log("There was an error with the update", err)
+    response.status(400).json({
+      status: false,
+      data: err
+    })
+  }
+}
+
+exports.deleteAll = async (request, response) => {
+  console.log("Deleting all emails...")
+
+  try {
+    const result = await User.deleteMany({})
+    response.status(200).json({
+      status:true,
+      data: result
+    })
+  } catch(err) {
+    console.log("Error deleting all documents", err)
+    response.status(400).json({
+      status:false,
+      data: err
+    })
+  }
+}
+
+exports.deleteByUsername = async(request, response) => {
+  const username = request.params.username
+  console.log("Delete user with username", username)
+
+  try {
+    const result = await User.findOneAndDelete({username:username})
+    response.status(200).json({
+      status: true,
+      data: result
+    })
+  } catch (err) {
+    console.log("There was an error with the delete", err)
+    response.status(404).json({
+      status: false,
+      data: err
+    })
+  }
+}
+
+
+exports.deleteByEmail = async(request, response) => {
+  const username = request.params.username
+  const email = request.params.email
+  console.log("Delete user with email", email)
+
+  try {
+    const result = await User.findOneAndDelete({email:email})
+    response.status(200).json({
+      status: true,
+      data: result
+    })
+  } catch (err) {
+    console.log("There was an error with the delete by email", err)
+    response.status(404).json({
       status: false,
       data: err
     })
