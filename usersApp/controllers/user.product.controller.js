@@ -41,3 +41,32 @@ exports.findOne = async(request, response) => {
     })
   }
 }
+
+
+exports.create = async(request, response) => {
+  console.log("Insert products to user")
+
+  const data = request.body
+  const username = data.username
+  const products = data.products
+
+  try {
+    const result = await User.updateOne({username:username}, 
+      {
+        $push: {
+          products: products
+        }
+      })
+    response.status(200).json({
+      status: true,
+      data: result
+    })
+  } catch(err) {
+    console.log("Error in inserting product", err)
+    response.status(400).json({
+      status: false,
+      data: err
+    })
+  }
+
+}
