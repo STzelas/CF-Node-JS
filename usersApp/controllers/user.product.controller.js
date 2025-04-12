@@ -70,3 +70,37 @@ exports.create = async(request, response) => {
   }
 
 }
+
+
+exports.update = async(request, response) => {
+  console.log("Updating user...")
+
+  const data = request.body
+  const username = data.username
+  const product_id = data._id
+
+  console.log("Update product for username: ", username)
+
+
+  try {
+    const result = await User.updateOne({username: username, "product._id": product_id}, 
+      {
+        $set: {
+          "product.$.quantity": product_quantity
+        }
+      }
+    )
+    response.status(200).json({
+      status: true,
+      data: result
+    })
+
+
+  } catch(err) {
+    console.log("Problem in updating product", err)
+    response.status(400).json({
+      status: false,
+      data: err
+    })
+  }
+}
