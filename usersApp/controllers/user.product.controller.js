@@ -104,3 +104,30 @@ exports.update = async(request, response) => {
     })
   }
 }
+
+exports.delete = async(request, response) => {
+  const username = request.params.username
+  const product_id = request.params._id
+
+  console.log("deleting user", username)
+
+  try {
+    const result = await User.updateOne({username:username}, 
+      {
+        $pull: {
+          products: {_id: product_id}
+        }
+      })
+
+      response.status(200).json({
+        status:true,
+        data: result
+      })
+  } catch (error) {
+    console.log("Error in deleting user", err)
+    response.status(400).json({
+      status: false,
+      data: err
+    })
+  }
+}
