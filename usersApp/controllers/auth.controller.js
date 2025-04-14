@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
+const authService = require('../services/auth.service')
 
 exports.login = async(request, response) => {
   console.log("Login user", request.body)
@@ -14,9 +15,10 @@ exports.login = async(request, response) => {
     const isMatch = await bcrypt.compare(password, result.password)
 
     if(result && result.username === username && isMatch) {
+      const token = authService.generateAccessToken(result)
       response.status(200).json({
         status: true,
-        data: "user logged in"
+        data: token
       })
     } else {
       response.status(404).json({
