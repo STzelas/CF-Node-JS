@@ -88,7 +88,6 @@ exports.update = async(request, response) => {
         $set: {
           "product.$.quantity": product_quantity
         }},
-        {new: true}
     )
     response.status(200).json({
       status: true,
