@@ -131,3 +131,43 @@ exports.delete = async(request, response) => {
     })
   }
 }
+
+exports.stats1 = async(request, response) => {
+  console.log("For each users return total amount and num of products")
+
+  try {
+    const result = await User.aggregate([
+      {
+        $unwind: "$products"
+      },
+      {
+        $project: {
+          _id: 1,
+          username: 1,
+          products: 1
+        }
+      },
+      {
+        $group: {
+          _id: {username: "username", product: "$products.product"},
+          totalAmount: {
+            $sum: {$multiply: ["$products.cost","$products.quantity"]}
+          },
+        count: {$sum: 1}
+        }
+      },
+      { $sort: {"_id.username": 1, "_id.product": 1} }
+    ])
+
+    response.status(200).json({
+      status: true,
+      data: result
+    })
+  } catch (err) {
+    console.log("Error in stats1", err)
+    response.status(400).json({
+      status:false,
+      data: err
+    })
+  }
+}
