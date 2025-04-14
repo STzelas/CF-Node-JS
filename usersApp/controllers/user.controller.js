@@ -58,7 +58,7 @@ exports.create = async(request, response) => {
   console.log("Create user")
   
   let data = request.body
-  const SaltOrRounds = 10
+  const SaltOrRounds = 10  // πόσους κύκλους κρυπτογράφισης θα κάνει
   const hashedPassword = await bcrypt.hash(data.password, SaltOrRounds)
 
   const newUser = new User({
