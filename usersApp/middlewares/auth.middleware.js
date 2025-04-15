@@ -4,7 +4,6 @@ const authService = require('../services/auth.service')
 
 function verifyToken(request, response, next) {
   const authHeader = request.headers['authorization']   // μπούσουλας του jwt
-  // console.log("Request", request)
   const token = authHeader && authHeader.split(' ')[1]
 
   if(!token) {
@@ -18,7 +17,6 @@ function verifyToken(request, response, next) {
 
   if(result.verified) {
     request.user = result.data // καινούργια μεταβλητή user, θα περιέχει το decoded αν είναι verified
-    // console.log("Request 2", request)
     next()
     
   } else {

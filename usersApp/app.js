@@ -15,7 +15,7 @@ app.use('/api/users', user)
 app.use('/api/user-product', userProduct)  // Στα endpoint εδώ βάζουμε -
 
 // Βρίσει ενα endpoint και ξεκινάει ενα server για τον swagger,
-//  και εμφανίζει ότι έχει μεσα το αρχείο swaggerDocument
+// και εμφανίζει ότι έχει μεσα το αρχείο swaggerDocument
 // το οποίο έχει μέσα το options
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument.options))
 
