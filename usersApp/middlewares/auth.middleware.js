@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken')
+const authService = require('../services/auth.service')
 
 
 function verifyToken(request, response, next) {
-  const authHeader = request.headers['authorization']
+  const authHeader = request.headers['authorization']   // μπούσουλας του jwt
+  // console.log("Request", request)
   const token = authHeader && authHeader.split(' ')[1]
 
   if(!token) {
@@ -12,18 +14,21 @@ function verifyToken(request, response, next) {
     })
   } 
 
-  const secret = process.env.TOKEN_SECRET
+  const result = authService.verifyAccessToken(token)
 
-  try {
-    const decoded = jwt.verify(token, secret)  // το verify είναι μέθοδος του jwt, συγκρίνει το token με το secret
-    console.log(decoded)
+  if(result.verified) {
+    request.user = result.data // καινούργια μεταβλητή user, θα περιέχει το decoded αν είναι verified
+    // console.log("Request 2", request)
     next()
-  } catch(err) {
+    
+  } else {
     return response.status(403).json({
       status: false,
-      data: err
+      data: result.data
     })
   }
+
+  
 }
 
 module.exports = { verifyToken }
