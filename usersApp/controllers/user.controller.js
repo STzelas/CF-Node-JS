@@ -31,7 +31,7 @@ exports.findOne = async(request, response) => {
     //   username: username
     // })
 
-    const result = await User.userService.findOne(username)
+    const result = await userService.findOne(username)
     if (result) {
       response.status(200).json({
         status: true,
