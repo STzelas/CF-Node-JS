@@ -31,7 +31,7 @@ function verifyToken(request, response, next) {
 
 function verifyRoles(allowedRole) {
   return (request, response, next) => {
-    if((!request.user || request.user.roles)) {
+    if((!request.user || !request.user.roles)) {
       return response.status(403).json({
         status: false,
         data: "Forbidden: No roles found"
