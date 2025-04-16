@@ -6,10 +6,20 @@ const User = require('./models/user.model')
 
 exports.options = {
   "components": {
-    "schemas":{
+    "schemas": {
       User: m2s(User)  // Το μετατρέπει σε json
+    },
+    "securitySchemes": {  // Για να βάλω στο swagger το jwt token
+      "bearerAuth": {
+        "type":"http",
+        "scheme":"bearer",
+        "bearerFormat":"JWT"
+      }
     }
   },
+  "security":[            // Για να βάλω στο swagger το jwt token
+    {"bearerAuth":[]}    
+  ],
   "openapi":"3.1.0",
   "info": {
     "version": "1.0.0",
@@ -45,7 +55,7 @@ exports.options = {
       "description":"Endpoints for Authentication"
     }
   ],  // Δηλώνω τα endpoints μου
-  "paths": {
+  "paths": {   // φέρνει όλους τους users
     "/api/users": {
       "get": {
         "tags":["Users"],
@@ -67,7 +77,7 @@ exports.options = {
         }
       }
     },
-    "/api/users/{username}": {
+    "/api/users/{username}": { // Φέρνει έναν user με συγκεκριμένο username
       "get": {
         "tags":["Users"],
         "parameters":[
@@ -90,6 +100,32 @@ exports.options = {
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/auth/login": { // Ενα call για να δωσει ενα jwt token
+      "post": {
+        "tags":["Auth"],
+        "description":"Login User",
+        "requestBody": {
+          "description":"User send username and password and for response we have jwt token",
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type":"object",
+                  "properties": {
+                    "username": { "type":"string"},
+                    "password": { "type":"string"}
+                 },
+                 "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description":"Token returned"
           }
         }
       }
