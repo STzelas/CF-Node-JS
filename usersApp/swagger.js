@@ -20,5 +20,52 @@ exports.options = {
       "URL":"https://aueb.gr",
       "email":"support@example.com"
     }
+  },
+  "servers": [ // Δηλώνουμε που θέλουμε να τρέξει τις κλήσεις
+    {
+      url: "http://localhost:3000",
+      description: "Local server"
+    },
+    {
+      url:"http://www.backend.aueb.gr",
+      description:"Test server"
+    }
+  ],
+  "tags": [ // Ομαδοποιούμε τις κλήσεις στο tags στο swagger
+    {
+      "name":"Users",
+      "description":"Endpoints for User"
+    },
+    {
+      "name":"Users and Products",
+      "description":"Endpoints for users and their products"
+    },
+    {
+      "name":"auth",
+      "description":"Endpoints for Authentication"
+    }
+  ],  // Δηλώνω τα endpoints μου
+  "paths": {
+    "/api/users": {
+      "get": {
+        "tags":["Users"],
+        "description":"Returns a list of all users",
+       "responses": {  // status
+        "200": {
+          "description":"List of all users",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type":"array",
+                "items": {
+                  "$ref": "#/components/schemas/User"
+                }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
