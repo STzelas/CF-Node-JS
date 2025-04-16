@@ -66,6 +66,33 @@ exports.options = {
           }
         }
       }
+    },
+    "/api/users/{username}": {
+      "get": {
+        "tags":["Users"],
+        "parameters":[
+          {
+            "name":"username",
+            "in":"path", // βρίσκεται σε path (path parameter)
+            "required":true,
+            "description":"Username of user that we want to find",
+            "type":"string"
+          }
+        ],
+        "description":"Returns users details for specific username",
+        "responses": {
+          "200": {
+            "description":"User details",
+            "content":{
+              "application/json":{
+                  "schema": {
+                  "$ref":"#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
