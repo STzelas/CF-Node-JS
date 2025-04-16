@@ -114,16 +114,9 @@ exports.options = {
             }
           }
         },
-        "response":{
+        "responses":{
           "200":{
-            "description":"JSON of new user",
-            "content":{
-              "application/json":{
-                  "schema": {
-                  "$ref":"#/components/schemas/User"
-                }
-              }
-            }
+            "description":"JSON of new user"
           }
         }
       }
@@ -143,14 +136,7 @@ exports.options = {
         "description":"Returns users details for specific username",
         "responses": {
           "200": {
-            "description":"User details",
-            "content":{
-              "application/json":{
-                  "schema": {
-                  "$ref":"#/components/schemas/User"
-                }
-              }
-            }
+            "description":"User details"
           }
         }
       }
