@@ -8,7 +8,6 @@ exports.findAll = async(request, response) => {
   try{
     // const result = await User.find()
     const result = await userService.findAll()
-
     response.status(200).json({
       status: true,
       data: result
