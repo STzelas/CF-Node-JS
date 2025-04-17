@@ -181,6 +181,24 @@ exports.options = {
             "description":"Update User"
           }
         }
+      },
+      "delete":{
+        "tags":["Users"],
+        "description":"Delete user from DB",
+        "parameters": [
+          {
+            "name":"username",
+            "in":"path",
+            "description":"User to delete",
+            "type":"string",
+            "required":true
+          }
+        ],
+        "responses":{
+          "200":{
+            "description":"Delete a user"
+          }
+        }
       }
     },
     "/api/auth/login": { // Ενα call για να δωσει ενα jwt token
