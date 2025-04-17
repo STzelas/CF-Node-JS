@@ -182,7 +182,7 @@ exports.options = {
           }
         }
       },
-      "delete":{
+      "delete":{  // Διαγράφει έναν user με συγκεκριμένο username
         "tags":["Users"],
         "description":"Delete user from DB",
         "parameters": [
@@ -226,6 +226,28 @@ exports.options = {
           }
         }
       }
+    },
+    "/api/user-product/{username}": {
+        "get": {
+          "tags": ["Users and Products"],
+          "parameters": [
+            {
+              "name":"username",
+              "in":"path",
+              "required": true,
+              "description": "Find user and products",
+              "type":"string"
+            }
+          ],
+          "responses":{
+            "200": {
+              "description":"User and products",
+              "schema":{
+                "$ref":"#/components/schemas/User"
+              }
+            }
+          }
+        }
     }
   }
 }
