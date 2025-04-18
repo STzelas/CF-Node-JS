@@ -17,8 +17,8 @@ const { format, createLogger, transports } = require("winston")
 const  { combine, timestamp, label, printf} = format
 const CATEGORY = "Products app logs"
 
-const customFormat = printf(({message, label, timestamp}) => {
-  return `${timestamp} [${label}: ${message}]`
+const customFormat = printf(({level, message, label, timestamp}) => {
+  return `${timestamp} [${label}: Level: ${level}, Message: ${message}]`
 })
 
 const logger = createLogger({
