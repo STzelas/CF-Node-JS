@@ -14,6 +14,7 @@ exports.findAll = async(request, response) => {
       data: result
     })
     logger.info("Success in reading all users")
+    // logger.warn("Success in reading all users")
   } catch(err) {
     console.log("Problem in reading users", err)
     logger.error("Problem in reading all users", err)
