@@ -80,7 +80,7 @@ const logger = createLogger({
       }
     ),
     new transports.MongoDB(
-      {
+      { 
         level: "warn",
         db: process.env.MONGODB_URI,
         collection: "server_logs",
