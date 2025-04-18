@@ -1,9 +1,20 @@
 $(document).ready(function(){
 
+  const token = localStorage.getItem('jwt_token')
+
+  if(!token) {
+    alert("You are not logged in")
+  } else {
+    alert("You are logged in")
+  }
+
   $.ajax({
     url:'http://localhost:3000/api/users',
     type:'get',
-    dataType:'JSON'
+    dataType:'JSON',
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
   })
   .done(function(response){
     // console.log(">>", response);
