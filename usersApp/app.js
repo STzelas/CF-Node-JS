@@ -12,10 +12,10 @@ const user = require('./routes/users.routes')
 const userProduct = require('./routes/user.products.routes')
 const authentication = require('./routes/auth.routes')
 
-//
-// app.use(cors({
-//   origin: ['http://localhost:3000']
-// }))
+
+app.use(cors({
+  origin: ['http://localhost:3000']
+}))
 
 app.use('/api/auth', authentication)
 app.use('/api/users', user)
