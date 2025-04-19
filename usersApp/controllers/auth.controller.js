@@ -50,7 +50,7 @@ exports.googleLogin = async(request, response) => {
       let user = await authService.googleAuth(code)
   
       if(user) {
-        console.log(">>>", users)
+        console.log(">>>", user)
   
         response.status(200).json({
           status: true,
@@ -71,6 +71,4 @@ exports.googleLogin = async(request, response) => {
       data: err
     })
   }
-  
-  
 }
