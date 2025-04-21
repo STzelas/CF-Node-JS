@@ -7,6 +7,13 @@
     "start": "node --env-file=.env server.js",
     "dev": "node --env-file=.env --watch server.js"
   },
+  "jest": {
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules",
+       "/logs"
+      ]
+  },
   "author": "",
   "license": "ISC",
   "description": "",
