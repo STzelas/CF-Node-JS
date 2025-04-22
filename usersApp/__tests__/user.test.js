@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const request = require('supertest')
 
+const authService = require('../services/auth.service')
 
 const app = require('../app')
 
@@ -23,9 +24,22 @@ afterEach(async()  => {
 })
 
 describe("Requests for /api/users", () => {
+
+  let token;
+  // Πριν τρέξει τα τεστ
+  beforeAll(() => {
+    user = {
+      username: "user1",
+      email: "user1@aueb.gr",
+      roles: ["READER", "ADMIN"]
+    }
+    token = authService.generateAccessToken(user)
+  })
+
   it("GET Returns all users", async () => {  // εκτός απο it μπορούμε και test είναι το ίδιο
     const res = await request(app)
       .get('/api/users')
+      .set('Authorization', `Bearer ${token}`)
 
     expect(res.statusCode).toBe(200)
     expect(res.body.status).toBe(true) // ή toBeTruthy
