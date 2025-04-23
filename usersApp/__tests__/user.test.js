@@ -89,7 +89,29 @@ describe("Requests for /api/users", () => {
         .send(testUser2)   // already exists
 
         expect(res.statusCode).toBe(400)
-        expect(res.body.status).toBe(false) // ή not.toBeTruthy
+        expect(res.body.status).toBe(false) // ή not.toBeTruthy()
+  })
+
+  it("POST Creates a user with the same email", async() => {
+    const testUser3 = {
+      'username':'test6',
+      'password':'12345',
+      'name':'test6 name',
+      'surname':'test6 surname',
+      'email':'test1@aueb.gr',
+      'address': {
+        'area':'test6 area',
+        'road':'test6 road'
+      }
+    }
+
+    const res = await request(app)
+        .post('/api/users')
+        .set('Authorization', `Bearer ${token}`)
+        .send(testUser3)   // already exists
+
+        expect(res.statusCode).toBe(400)
+        expect(res.body.status).not.toBeTruthy() // ή .toBe(false)
   })
 })
 
