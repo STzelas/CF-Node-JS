@@ -163,4 +163,38 @@ describe("Requests for /api/user/:username", () => {
       expect(res.body.data.username).toBe(result.username)
       expect(res.body.data.email).toBe(result.email)
   })
+
+  it("PATCH Update a user", async () => {
+    const result = await userService.findLastInsertedUser()
+
+    const updatedUser = {
+      username: result.username,
+      name: 'new updated name',
+      surname: 'new updated surname',
+      email: 'new@aueb.gr',
+      address: {
+        area: 'new area',
+        road: 'new road'
+      }
+    }
+
+    const res = await request(app)
+              .patch('/api/users/' + result.username)
+              .set('Authorization', `Bearer ${token}`)
+              .send(updatedUser)
+
+      expect(res.statusCode).toBe(200)
+      expect(res.body.status).toBeTruthy() // ή .toBe(true)
+  })
+
+  it("DELETE delete a user", async() => {
+    const result = await userService.findLastInsertedUser()
+
+    const res = await request(app)
+              .delete('/api/users/' + result.username)
+              .set('Authorization', `Bearer ${token}`)
+              
+      expect(res.statusCode).toBe(200)
+      expect(res.body.status).toBeTruthy() // ή .toBe(true)
+  })
 })
