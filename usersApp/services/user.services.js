@@ -23,4 +23,5 @@ async function findLastInsertedUser() {
   }
 }
 
+
 module.exports = { findAll, findOne, findLastInsertedUser }
