@@ -113,6 +113,28 @@ describe("Requests for /api/users", () => {
         expect(res.statusCode).toBe(400)
         expect(res.body.status).not.toBeTruthy() // ή .toBe(false)
   })
+
+  it("POST Creates a user with empty name, surname, password", async() => {
+    const userTest4 = {
+      'username':'test6',
+      'password':'',
+      'name':'',
+      'surname':'',
+      'email':'test6@aueb.gr',
+      'address': {
+        'area':'test6 area',
+        'road':'test6 road'
+      }
+    }
+
+    const res = await request(app)
+        .post('/api/users')
+        .set('Authorization', `Bearer ${token}`)
+        .send(userTest4)
+
+        expect(res.statusCode).toBe(400)
+        expect(res.body.status).not.toBeTruthy()
+  })
 })
 
 describe("Requests for /api/user/:username", () => {
