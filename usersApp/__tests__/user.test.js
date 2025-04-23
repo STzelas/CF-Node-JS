@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const request = require('supertest')
 
 const authService = require('../services/auth.service')
+const userService = require('../services/user.services')
 
 const app = require('../app')
 
@@ -45,4 +46,32 @@ describe("Requests for /api/users", () => {
     expect(res.body.status).toBe(true) // ή toBeTruthy
     expect(res.body.data.length).toBeGreaterThan(0)
   }, 50000)                       
+})
+
+describe("Requests for /api/user/:username", () => {
+  let token;
+
+  beforeAll(() => {
+    user = {
+      username: "user1",
+      email: "user1@aueb.gr",
+      roles: ["READER", "ADMIN"]
+    }
+    token = authService.generateAccessToken(user)
+  })
+
+  it('GET Returns specific a user', async() => {
+
+    const result = await userService.findLastInsertedUser()
+    console.log("RESULT >>>", result)
+
+    const res = await request(app)
+              .get('/api/users/' + result.username)
+              .set('Authorization', `Bearer ${token}`)
+
+      expect(res.statusCode).toBe(200)
+      expect(res.body.status).toBeTruthy() // ή .toBe(true)
+      expect(res.body.data.username).toBe(result.username)
+      expect(res.body.data.email).toBe(result.email)
+  })
 })
