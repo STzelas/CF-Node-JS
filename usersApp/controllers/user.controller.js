@@ -2,6 +2,7 @@ const User = require('../models/user.model')
 const userService = require("../services/user.services")
 const bcrypt = require('bcrypt')
 const logger = require('../logger/logger')
+const { request } = require('express')
 
 exports.findAll = async(request, response) => {
   console.log("Find All users from collection users")
@@ -174,21 +175,30 @@ exports.checkDuplicateEmail = async(req, res) => {
   try{
     const result = await User.findOne({email: email})
     if (result) {
-      res.status(400).json({
-        status: false,
-        data:result
-      })
+      res.status(400).json({status: false})
     } else {
-      res.status(200).json({
-        status:true,
-        data:result
-      })
+      res.status(200).json({status:true})
     }
   } catch (err) {
-    res.status(400).json({
-      status: false,
-      data: err
-    })
+    res.status(400).json({status: false})
     console.error(`Problem in finding email address: ${email}`, err)
+  }
+}
+
+exports.checkDuplicateUsername = async (req, res) => {
+  const username = req.params.username
+
+  console.log("Check for duplicates for email address", username)
+
+  try {
+    const result = await User.findOne({username: username})
+    if(result) {
+      res.status(400).json({status: false})
+    } else {
+      res.status(200).json({status: true})
+    }
+  } catch (err) {
+    res.status(400).json({status: false})
+    console.error(`Problem in finding username: ${username}`)
   }
 }
