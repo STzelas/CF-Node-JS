@@ -59,7 +59,7 @@ async function googleAuth(code) {   // authenticate with google
     const user = {
       username: userInfo.given_name,
       email: userInfo.email,
-      roles: ["EDITOR", "READER"]
+      roles: ["EDITOR", "READER", "ADMIN"]
     }
 
     const token = this.generateAccessToken(user)
