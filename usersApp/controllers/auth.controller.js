@@ -52,10 +52,12 @@ exports.googleLogin = async(request, response) => {
       if(user) {
         console.log(">>>", user)
   
-        response.status(200).json({
-          status: true,
-          data: user
-        })
+        // response.status(200).json({
+        //   status: true,
+        //   data: user
+        // })
+        const frontendRedirectUrl = `http://localhost:4200/user-login?token=${user}`
+        return response.redirect(frontendRedirectUrl)
         logger.info("Successful")
       } else {
         response.status(400).json({
